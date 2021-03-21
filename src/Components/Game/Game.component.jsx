@@ -186,14 +186,17 @@ class DICEGAME extends Component {
           dice: <label>{this.state.dices[0]} </label>
           <label>{this.state.dices[1]}</label>
         </div>
+
         <div id="rollhold">
           <button onClick={this.handleRoll}>Roll</button>
           <button onClick={this.handleHold}>Hold</button>
         </div>
+
         <div id="currentscore">
           current round:
           {this.state.players[this.state.playerTurn].currentRound}
         </div>
+
         <div> {this.state.players[this.state.playerTurn].name}, Your Turn!</div>
 
         <div>
