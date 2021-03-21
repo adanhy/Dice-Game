@@ -1,16 +1,28 @@
 .player {
   display: flex;
   flex-direction: column;
-  background-color: aquamarine;
+  background-color: rgb(241, 142, 28);
+  color: white;
   justify-content: center;
   align-items: center;
-  width: 20rem;
+  /* width: 20rem; */
   text-align: center;
+  margin: 1rem 2rem;
   /* padding: 2rem; */
 }
 
 .player > div {
   display: flex;
+  flex-direction: column;
+  margin: 0.1rem 2rem;
+}
+
+.player > div > div {
+  display: flex;
   flex-direction: row;
-  margin: 0.5rem;
+  margin: 0.1rem 0;
+}
+
+input {
+  width: 3rem;
 }

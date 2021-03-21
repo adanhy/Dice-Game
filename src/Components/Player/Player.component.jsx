@@ -8,13 +8,10 @@ class PLAYER extends Component {
   render() {
     return (
       <div className="player">
+        <div> {this.props.playerinfo.name}</div>
         <div>
-          {this.props.playerinfo.name} Total Score:{" "}
-          {this.props.playerinfo.totalScore}
-        </div>
-        <div>
-          {this.props.playerinfo.name} Games Won:{" "}
-          {this.props.playerinfo.gamesWon}
+          <div>Total Score: {this.props.playerinfo.totalScore}</div>{" "}
+          <div>Games Won: {this.props.playerinfo.gamesWon}</div>
         </div>
       </div>
     );

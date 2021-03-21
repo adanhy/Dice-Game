@@ -1,15 +1,20 @@
 import React, { Component } from "react";
 import PLAYER from "../Player/Player.component";
+// import Dice from "../Dice/dice.component";
+// import useSound from "use-sound";
+// import boopSfx from "../../sounds/boop.mp3";
+
+import "./normalize.css";
+import "./Game.css";
 
 class DICEGAME extends Component {
   constructor(props) {
     super(props);
     this.state = {
       numOfdiceSides: 6,
-      winningScore: 20,
+      winningScore: 50,
       playerTurn: 0,
       dices: [0, 0],
-
       players: [
         {
           name: "Player 1",
@@ -47,6 +52,9 @@ class DICEGAME extends Component {
   };
 
   handleRoll = () => {
+    // const [play] = useSound(boopSfx);
+    // play();
+
     console.log(`roll`);
     const dcs = [this.Roll(), this.Roll()];
     const diceSum = dcs[0] + dcs[1];
@@ -106,15 +114,41 @@ class DICEGAME extends Component {
     ) {
       console.log(`player ${this.state.playerTurn} WON`);
       this.setState((state) => {
+        const plrs = state.players.map((v, i, arr) => {
+          return {
+            name: v.name,
+            totalScore: 0,
+            currentRound: 0,
+            gamesWon: state.playerTurn === i ? v.gamesWon + 1 : v.gamesWon,
+          };
+        });
+
         return {
-          //
+          playerTurn: state.playerTurn,
+          dices: [0, 0],
+          players: plrs,
         };
       });
     }
   };
 
   handleRestartGame = () => {
-    console.log(`restart`);
+    this.setState((state) => {
+      const plrs = state.players.map((v) => {
+        return {
+          name: v.name,
+          totalScore: 0,
+          currentRound: 0,
+          gamesWon: 0,
+        };
+      });
+
+      return {
+        playerTurn: state.playerTurn,
+        dices: [0, 0],
+        players: plrs,
+      };
+    });
   };
 
   handleHold = () => {
@@ -146,38 +180,45 @@ class DICEGAME extends Component {
   };
 
   render() {
-    // const { passedData } = null;
     return (
       <div>
         <div id="dices">
-          dices: <label>{this.state.dices[0]} </label>
+          dice: <label>{this.state.dices[0]} </label>
           <label>{this.state.dices[1]}</label>
+        </div>
+        <div id="rollhold">
+          <button onClick={this.handleRoll}>Roll</button>
+          <button onClick={this.handleHold}>Hold</button>
         </div>
         <div id="currentscore">
           current round:
           {this.state.players[this.state.playerTurn].currentRound}
         </div>
         <div> {this.state.players[this.state.playerTurn].name}, Your Turn!</div>
-        <div id="rollhold">
-          <button onClick={this.handleRoll}>Roll</button>
-          <button onClick={this.handleHold}>Hold</button>
-        </div>
+
         <div>
+          <label htmlFor="text">first to: </label>
           <input
+            name="text"
             type="number"
             value={this.state.winningScore}
             onChange={this.handleChange}
-          />{" "}
+          />
+          {" wins! "}
+        </div>
+        <div>
           <button onClick={this.handleRestartGame}>Restart Game</button>
         </div>
-        <PLAYER
-          playerinfo={this.state.players[0]}
-          parentCallback={this.handleCallback}
-        />
-        <PLAYER
-          playerinfo={this.state.players[1]}
-          parentCallback={this.handleCallback}
-        />
+        <div id="players_container">
+          <PLAYER
+            playerinfo={this.state.players[0]}
+            parentCallback={this.handleCallback}
+          />
+          <PLAYER
+            playerinfo={this.state.players[1]}
+            parentCallback={this.handleCallback}
+          />
+        </div>
       </div>
     );
   }
